@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">ULPF — End-to-end system design</title>
+  <desc id="desc">Compact architecture covering ingestion, processing, discovery, normalization, output and operations. Dashed boxes identify planned capabilities.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#41627c"/></marker>
+    <style>
+      text{font-family:Arial,Helvetica,sans-serif;fill:#17354c}
+      .heading{font-size:17px;font-weight:700;letter-spacing:.6px}
+      .label{font-size:16px;font-weight:700}
+      .body{font-size:14px}
+      .small{font-size:12px}
+      .white{fill:white}
+      .muted{fill:#526c80}
+      .panel{fill:#f5f9fc;stroke:#c9d9e5;stroke-width:1.3}
+      .box{fill:white;stroke:#4693c5;stroke-width:1.5}
+      .planned{fill:#f8fafc;stroke:#8095a7;stroke-width:1.5;stroke-dasharray:6 4}
+      .amber{fill:#fff6e4;stroke:#d5a345;stroke-width:1.5}
+      .green{fill:#eef9f4;stroke:#469879;stroke-width:1.5}
+      .edge{fill:none;stroke:#41627c;stroke-width:1.6;marker-end:url(#arrow)}
+      .futureEdge{fill:none;stroke:#41627c;stroke-width:1.6;stroke-dasharray:5 3;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1200" height="720" rx="12" fill="white"/>
+  <text x="20" y="28" class="heading">ULPF / END-TO-END SYSTEM DESIGN</text>
+  <rect x="848" y="14" width="22" height="13" rx="3" class="box"/>
+  <text x="878" y="25" class="small">Implemented</text>
+  <rect x="986" y="14" width="22" height="13" rx="3" class="planned"/>
+  <text x="1016" y="25" class="small">Planned integration</text>
+
+  <!-- Three fixed columns preserve a compact rectangular composition. -->
+  <rect x="16" y="44" width="270" height="490" rx="10" class="panel"/>
+  <rect x="302" y="44" width="580" height="490" rx="10" class="panel"/>
+  <rect x="898" y="44" width="286" height="490" rx="10" class="panel"/>
+  <path d="M26 44 H276 Q286 44 286 54 V86 H16 V54 Q16 44 26 44" fill="#0072bc"/>
+  <path d="M312 44 H872 Q882 44 882 54 V86 H302 V54 Q302 44 312 44" fill="#0072bc"/>
+  <path d="M908 44 H1174 Q1184 44 1184 54 V86 H898 V54 Q898 44 908 44" fill="#0072bc"/>
+  <text x="32" y="71" class="heading white">01  INGESTION</text>
+  <text x="320" y="71" class="heading white">02  PROCESSING &amp; NORMALIZATION</text>
+  <text x="914" y="71" class="heading white">03  DELIVERY</text>
+
+  <!-- Ingestion -->
+  <rect x="30" y="100" width="242" height="88" rx="7" class="box"/>
+  <text x="44" y="123" class="label">Heterogeneous log sources</text>
+  <text x="44" y="146" class="body">Firewalls · Linux · Web servers</text>
+  <text x="44" y="169" class="body">Applications · Databases · IoT</text>
+  <path d="M151 188 V202" class="edge"/>
+  <rect x="30" y="204" width="242" height="68" rx="7" class="box"/>
+  <text x="44" y="228" class="label">Local / demo input</text>
+  <text x="44" y="252" class="body">Files · stdin · Log generator</text>
+  <rect x="30" y="292" width="242" height="68" rx="7" class="planned"/>
+  <text x="44" y="316" class="label">Collection gateway</text>
+  <text x="44" y="340" class="body">Syslog TCP / UDP · Agents · API</text>
+  <path d="M151 360 V378" class="futureEdge"/>
+  <rect x="30" y="380" width="242" height="62" rx="7" class="planned"/>
+  <text x="44" y="404" class="label">Kafka / raw_logs</text>
+  <text x="44" y="426" class="body">Partitions · Retention · Replay</text>
+  <path d="M151 442 V458" class="futureEdge"/>
+  <rect x="30" y="460" width="242" height="60" rx="7" class="planned"/>
+  <text x="44" y="484" class="label">Pathway worker pool</text>
+  <text x="44" y="506" class="body">Consumer groups · Parallelism</text>
+  <path d="M30 144 H23 V326 H30" class="futureEdge"/>
+
+  <!-- Processing: paired rows, explicit branch and merge -->
+  <rect x="318" y="100" width="258" height="88" rx="7" class="box"/>
+  <text x="332" y="123" class="label">Format detection</text>
+  <text x="332" y="146" class="body">JSON validation · Header heuristics</text>
+  <text x="332" y="169" class="body">Syslog · CEF · LEEF · XML · Text</text>
+  <rect x="608" y="100" width="258" height="88" rx="7" class="box"/>
+  <text x="622" y="123" class="label">Confidence-based dispatch</text>
+  <text x="622" y="146" class="body">Score registered parser modules</text>
+  <text x="622" y="169" class="body">Best match ≥ 0.5 → select parser</text>
+  <path d="M576 144 H606" class="edge"/>
+  <path d="M272 238 H294 V144 H316" class="edge"/>
+  <path d="M272 490 H294 V172 H316" class="futureEdge"/>
+
+  <rect x="318" y="228" width="258" height="98" rx="7" class="box"/>
+  <text x="332" y="252" class="label">Known-source extraction</text>
+  <text x="332" y="275" class="body">Cisco ASA · Nginx · Linux syslog</text>
+  <text x="332" y="296" class="body">Generic JSON / Syslog · YAML rules</text>
+  <text x="332" y="315" class="small muted">Regex groups · Flattening · Key-value pairs</text>
+  <rect x="608" y="228" width="258" height="98" rx="7" class="amber"/>
+  <text x="622" y="252" class="label">Drain3 discovery / fallback</text>
+  <text x="622" y="275" class="body">Per-source templates + parameters</text>
+  <text x="622" y="296" class="body">Unusable result → generic extraction</text>
+  <text x="622" y="315" class="small muted">Unknown formats retain original payload</text>
+  <path d="M670 188 V206 H447 V226" class="edge"/>
+  <text x="470" y="201" class="small">Matched</text>
+  <path d="M737 188 V226" class="edge"/>
+  <text x="746" y="210" class="small">Unmatched</text>
+  <path d="M576 281 H606" class="edge"/>
+  <text x="580" y="272" font-size="9">Fail</text>
+
+  <rect x="318" y="364" width="258" height="86" rx="7" class="box"/>
+  <text x="332" y="387" class="label">Field normalization</text>
+  <text x="332" y="410" class="body">Aliases → canonical field names</text>
+  <text x="332" y="432" class="body">Action · Outcome · Network · User</text>
+  <rect x="608" y="364" width="258" height="86" rx="7" class="box"/>
+  <text x="622" y="387" class="label">Pydantic validation</text>
+  <text x="622" y="410" class="body">Typed UnifiedEvent schema</text>
+  <text x="622" y="432" class="body">Invalid → minimal event + error count</text>
+  <path d="M447 326 V362" class="edge"/>
+  <path d="M737 326 V344 H477 V362" class="edge"/>
+  <path d="M576 406 H606" class="edge"/>
+  <rect x="318" y="474" width="548" height="46" rx="7" fill="#e8f2fb" stroke="#a4c5df"/>
+  <text x="332" y="493" class="small" font-weight="700">EVENT CONTRACT</text>
+  <text x="332" y="510" class="small">Identity · Timestamp · Source · Event · Network · User · Process · File · Raw data</text>
+
+  <!-- Delivery -->
+  <rect x="914" y="100" width="254" height="124" rx="7" class="green"/>
+  <text x="928" y="124" class="label">UnifiedEvent + provenance</text>
+  <text x="928" y="150" class="body">UUID · Timestamp · Normalized fields</text>
+  <text x="928" y="174" class="body">raw_message + source_fields</text>
+  <text x="928" y="198" class="body">Parser / format / template metadata</text>
+  <path d="M866 406 H890 V164 H912" class="edge"/>
+  <path d="M1041 224 V242" class="edge"/>
+  <rect x="914" y="244" width="254" height="60" rx="7" class="green"/>
+  <text x="928" y="268" class="label">JSONL output</text>
+  <text x="928" y="290" class="body">Files · Output streams · Inspection</text>
+  <rect x="914" y="330" width="254" height="60" rx="7" class="planned"/>
+  <text x="928" y="354" class="label">Kafka / normalized_events</text>
+  <text x="928" y="376" class="body">Independent downstream consumers</text>
+  <path d="M1168 162 H1176 V360 H1168" class="futureEdge"/>
+  <path d="M1041 390 V412" class="futureEdge"/>
+  <rect x="914" y="414" width="254" height="106" rx="7" class="planned"/>
+  <text x="928" y="438" class="label">Downstream systems</text>
+  <text x="928" y="461" class="body">Elasticsearch / SIEM → correlation</text>
+  <text x="928" y="484" class="body">S3 / MinIO → archival and replay</text>
+  <text x="928" y="507" class="body">ML pipelines → anomaly detection</text>
+
+  <!-- Cross-cutting band -->
+  <rect x="16" y="548" width="1168" height="156" rx="10" class="panel"/>
+  <text x="32" y="573" class="heading">04  EXTENSIBILITY, VISIBILITY &amp; OPERATIONS</text>
+  <rect x="30" y="588" width="272" height="102" rx="7" class="box"/>
+  <text x="44" y="611" class="label">Plug-and-play module registry</text>
+  <text x="44" y="635" class="body">Discover Python / YAML at startup</text>
+  <text x="44" y="657" class="body">recognize → parse → map → validate</text>
+  <text x="44" y="678" class="small muted">Template scaffolds available for review</text>
+  <rect x="318" y="588" width="272" height="102" rx="7" class="box"/>
+  <text x="332" y="611" class="label">Processing statistics</text>
+  <text x="332" y="635" class="body">Total events · Errors · Parser usage</text>
+  <text x="332" y="657" class="body">Fallback count · Events per second</text>
+  <text x="332" y="678" class="small muted">Console summaries and programmatic stats</text>
+  <rect x="606" y="588" width="272" height="102" rx="7" class="planned"/>
+  <text x="620" y="611" class="label">Reliability &amp; monitoring</text>
+  <text x="620" y="635" class="body">Delivery retries · Dead-letter queue</text>
+  <text x="620" y="657" class="body">Miner snapshots · Restart recovery</text>
+  <text x="620" y="678" class="small muted">Consumer lag · Latency · Worker health</text>
+  <rect x="894" y="588" width="274" height="102" rx="7" class="planned"/>
+  <text x="908" y="611" class="label">Production deployment</text>
+  <text x="908" y="635" class="body">Docker Compose → worker scaling</text>
+  <text x="908" y="657" class="body">Offline bundle · Kafka authentication</text>
+  <text x="908" y="678" class="small muted">Deploy configs exist; integrations pending</text>
+</svg>

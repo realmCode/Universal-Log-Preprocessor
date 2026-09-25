@@ -1,0 +1,166 @@
+
+flowchart TB
+
+    subgraph ingestion["01 · LOG SOURCES & INGESTION"]
+        direction LR
+        sources["ENTERPRISE SOURCES
+        Firewalls · Linux servers · Web servers
+        Applications · Databases · IoT"]
+        collectors["COLLECTION GATEWAY
+        Syslog TCP / UDP · Agents · HTTP
+        Source identity · Transport security"]
+        broker[("KAFKA · RAW LOGS
+        Partitioning · Retention · Replay")]
+        files["LOCAL INPUT
+        Log files · stdin · Demo generator"]
+
+        sources --> collectors --> broker
+        sources --> files
+    end
+
+    subgraph runtime["02 · PROCESSING & PARSER DISPATCH"]
+        direction LR
+        workers["PATHWAY WORKERS
+        Kafka consumer group
+        Partition-based parallelism"]
+        detect["FORMAT DETECTOR
+        JSON validation · Header heuristics
+        Syslog · CEF · LEEF · XML · Text"]
+        match{"PARSER SELECTION
+        Highest confidence
+        Threshold ≥ 0.5"}
+        known["KNOWN-SOURCE PARSERS
+        Cisco ASA · Nginx · Linux
+        Generic JSON · Generic Syslog"]
+        extracted["FIELD EXTRACTION
+        Regex groups · JSON flattening
+        Header fields · Key-value pairs"]
+
+        workers --> detect --> match
+        match -->|"Recognized"| known --> extracted
+    end
+
+    subgraph discovery["03 · UNKNOWN SOURCES & MODULE LIFECYCLE"]
+        direction LR
+        drain["DRAIN3 FALLBACK
+        Per-source template miners
+        Pattern discovery · Parameters"]
+        generic["GENERIC FALLBACK
+        Key-value extraction
+        Preserve unparsed payload"]
+        scaffold["PARSER ONBOARDING
+        Template → YAML scaffold
+        Human review · Test samples"]
+        registry["MODULE REGISTRY
+        Discover YAML / Python modules
+        recognize · parse · map · validate"]
+        persistence[("MINER STATE
+        Persistent snapshots
+        Recovery across restarts")]
+
+        drain -->|"No usable result"| generic
+        drain -->|"New template"| scaffold
+        scaffold -.->|"Review and activate"| registry
+        drain -.-> persistence
+    end
+
+    subgraph canonical["04 · NORMALIZATION, VALIDATION & TRACEABILITY"]
+        direction LR
+        mapping["FIELD NORMALIZATION
+        Source aliases → canonical names
+        Types · Actions · Outcomes"]
+        validation{"PYDANTIC VALIDATION
+        UnifiedEvent schema"}
+        unified["CANONICAL EVENT
+        UUID · Timestamp · Source identity
+        Network · User · Process · File"]
+        minimal["MINIMAL EVENT
+        Preserve raw log + extracted fields
+        Increment validation error count"]
+        metadata["TRACEABILITY
+        raw_message · source_fields
+        Parser / format metadata
+        Drain3 template context"]
+
+        mapping --> validation
+        validation -->|"Valid"| unified
+        validation -->|"Invalid"| minimal
+        unified --> metadata
+        minimal --> metadata
+    end
+
+    subgraph delivery["05 · DELIVERY, STORAGE & CONSUMPTION"]
+        direction LR
+        jsonl[("JSONL OUTPUT
+        Files · Output streams")]
+        normalized[("KAFKA · NORMALIZED EVENTS
+        Decouple downstream consumers")]
+        siem["ELASTICSEARCH / SIEM
+        Search · Correlation · Alerts"]
+        archive[("S3 / MINIO
+        Raw + normalized archives")]
+        analytics["ANALYTICS / ML
+        Feature extraction
+        Anomaly detection"]
+
+        normalized --> siem
+        normalized --> archive
+        normalized --> analytics
+    end
+
+    subgraph operations["06 · OPERATIONS & RELIABILITY"]
+        direction LR
+        stats["PROCESSING STATISTICS
+        Events · Errors · Parser usage
+        Fallback count · Throughput"]
+        monitoring["MONITORING
+        Consumer lag · Parse success
+        Latency · Worker health"]
+        recovery["DELIVERY RECOVERY
+        Retry policy · Dead-letter queue
+        Failed-event replay"]
+        deployment["DEPLOYMENT
+        Docker Compose · Offline packaging
+        Kafka authentication · Access control"]
+    end
+
+    broker -.-> workers
+    files --> detect
+
+    registry -->|"Available parsers"| match
+    match -->|"No match"| drain
+    known -->|"Empty / invalid parse"| drain
+
+    extracted --> mapping
+    drain -->|"Template parameters"| mapping
+    generic --> mapping
+
+    metadata --> jsonl
+    metadata -.-> normalized
+
+    mapping -->|"Counters"| stats
+    stats -.-> monitoring
+    workers -.->|"Lag and health"| monitoring
+    normalized -.->|"Delivery failure"| recovery
+
+    classDef implemented fill:#EDF5FC,stroke:#0072BC,stroke-width:1.5px,color:#153650;
+    classDef primary fill:#0072BC,stroke:#005A94,stroke-width:1.5px,color:#FFFFFF;
+    classDef discoveryStyle fill:#FFF4DD,stroke:#CE952B,stroke-width:1.5px,color:#704C00;
+    classDef storage fill:#EAF7F1,stroke:#31866B,stroke-width:1.5px,color:#17553F;
+    classDef planned fill:#F1F5F9,stroke:#718096,stroke-width:1.5px,stroke-dasharray:5 4,color:#334155;
+    classDef plannedStorage fill:#EEF7F3,stroke:#718096,stroke-width:1.5px,stroke-dasharray:5 4,color:#334155;
+
+    class files,detect,known,extracted,registry,mapping,minimal,metadata,stats implemented;
+    class sources,match,validation,unified primary;
+    class drain,generic discoveryStyle;
+    class jsonl storage;
+    class collectors,workers,scaffold,siem,analytics,monitoring,recovery,deployment planned;
+    class broker,persistence,normalized,archive plannedStorage;
+
+    style ingestion fill:#FFFFFF,stroke:#CBD5E1
+    style runtime fill:#F7FAFE,stroke:#B8D4EA
+    style discovery fill:#FFFCF5,stroke:#E8D5A7
+    style canonical fill:#F7FAFE,stroke:#B8D4EA
+    style delivery fill:#F5FBF8,stroke:#BCDCCF
+    style operations fill:#F8FAFC,stroke:#CBD5E1
+```
