@@ -1,0 +1,25 @@
+module:
+  name: generic_json
+  source_type: generic
+  formats: [json]
+  version: "1.0.0"
+  description: "Universal JSON log parser. Flattens nested objects, extracts common fields."
+
+recognize:
+  patterns:
+    - match: '^\\s*\\{'
+      confidence: 0.90
+      format: json
+
+parse:
+  flatten: true
+  flatten_separator: "."
+  extract_common_fields: true
+
+mapping:
+  # Common JSON fields → unified
+  timestamp: timestamp
+  level: log_level
+  message: raw_message_supplement
+  host: source_host
+  hostname: source_host

@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: ulpf-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - ulpf-net
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: ulpf-kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+    networks:
+      - ulpf-net
+
+  ulpf-worker:
+    build: .
+    container_name: ulpf-worker
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_BROKER: kafka:9092
+      KAFKA_INPUT_TOPIC: raw_logs
+      KAFKA_OUTPUT_TOPIC: normalized_events
+    volumes:
+      - ./modules:/app/modules:ro
+      - ./data:/app/data:ro
+      - ./drain3_state:/app/drain3_state
+      - ./output:/app/output
+    command: >
+      python pathway_app.py
+      --kafka-input raw_logs
+      --kafka-output normalized_events
+      --drain3
+    restart: unless-stopped
+    networks:
+      - ulpf-net
+
+  log-generator:
+    build: .
+    container_name: ulpf-log-generator
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_BROKER: kafka:9092
+      KAFKA_TOPIC: raw_logs
+    volumes:
+      - ./data:/app/data:ro
+    command: >
+      python scripts/generate_demo_logs.py
+      data/sample_logs/demo_mixed.log 50
+      && python scripts/produce_to_kafka.py
+      --input data/sample_logs/demo_mixed.log
+      --topic raw_logs
+      --broker kafka:9092
+    networks:
+      - ulpf-net
+    profiles:
+      - demo
+
+volumes:
+  kafka-data:
+
+networks:
+  ulpf-net:
+    driver: bridge

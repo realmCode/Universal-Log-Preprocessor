@@ -1,0 +1,23 @@
+module:
+  name: generic_syslog
+  source_type: generic
+  formats: [syslog]
+  version: "1.0.0"
+  description: "Universal Syslog parser (RFC 3164/5424). Extracts key=value pairs from any Syslog payload."
+
+recognize:
+  patterns:
+    - match: '^<\\d{1,3}>'
+      confidence: 0.85
+      format: syslog
+
+parse:
+  extract_key_value: true
+  strip_header: true
+
+mapping:
+  # Syslog header fields
+  _syslog_timestamp: timestamp
+  _syslog_hostname: source_host
+  _syslog_app: source_product
+  _syslog_pid: process_pid

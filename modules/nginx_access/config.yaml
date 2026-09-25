@@ -1,0 +1,27 @@
+module:
+  name: nginx_access
+  source_type: application
+  formats: [text]
+  version: "1.0.0"
+  description: "Nginx access log parser. Handles Combined and Common Log Format."
+
+recognize:
+  patterns:
+    - match: '^\\S+\\s+-\\s+\\S+\\s+\\[.*\\]\\s+".*"\\s+\\d+'
+      confidence: 0.90
+      format: text
+
+parse:
+  format: combined  # combined or common
+  extract_timestamp: true
+  timestamp_format: "%d/%b/%Y:%H:%M:%S %z"
+
+mapping:
+  remote_addr: src_ip
+  remote_user: user_name
+  time_local: timestamp
+  request_method: event_action
+  status: event_outcome
+  body_bytes_sent: bytes_sent
+  http_referer: referrer
+  http_user_agent: user_agent

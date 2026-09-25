@@ -1,0 +1,80 @@
+Sep 02 20:01:17 api01 sshd[78612]: Accepted publickey for root from 191.222.219.195 port 40193 ssh2
+DEVICE:sensor-001 motion=detected zone=6 confidence=91% ts=1788379280
+71.229.241.113 - - [02/Sep/2026:20:01:17 +0000] "POST /dashboard HTTP/1.1" 200 42559 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+Sep 02 20:01:17 bastion sshd[38037]: Accepted publickey for ubuntu from 49.210.65.182 port 38313 ssh2
+146.44.226.124 - - [02/Sep/2026:20:01:17 +0000] "GET /static/js/main.js HTTP/1.1" 200 28366 "-" "kube-probe/1.25"
+Sep 02 20:01:17 monitoring sudo:   appuser : TTY=pts/2 ; PWD=/home/svc_scanner ; USER=root ; COMMAND=/opt/scripts/backup.sh
+<135>Oct 02 20:01:17 fw-dmz %ASA-6-302015: Built inbound TCP connection 879451 for host 66.243.226.243:14279 to host 79.209.207.133:40777
+Sep 02 20:01:17 bastion CRON[18078]: (svc_scanner) CMD (kubectl get pods -A)
+Sep 02 20:01:17 db01 sshd[74458]: Accepted publickey for appuser from 139.115.250.120 port 47732 ssh2
+124.88.158.252 - - [02/Sep/2026:20:01:17 +0000] "GET /api/v1/health HTTP/1.1" 500 25293 "-" "kube-probe/1.25"
+<135>Oct 02 20:01:17 fw-dmz %ASA-6-113005: User 'mgarcia' from 114.253.209.249 succeeded
+DEVICE:thermostat-01 heartbeat sent=OK seq=98382
+Sep 02 20:01:17 web01 sshd[97077]: Accepted publickey for appuser from 54.207.234.219 port 35552 ssh2
+126.128.66.6 - - [02/Sep/2026:20:01:17 +0000] "PATCH /api/v1/users HTTP/1.1" 200 32933 "https://internal.corp" "curl/7.68.0"
+Sep 02 20:01:17 bastion sudo:   admin : TTY=pts/2 ; PWD=/home/appuser ; USER=postgres ; COMMAND=/opt/scripts/backup.sh
+DEVICE:gateway-01 motion=detected zone=4 confidence=90% ts=1788379279
+134.25.71.72 - - [02/Sep/2026:20:01:17 +0000] "PATCH /favicon.ico HTTP/1.1" 304 41534 "https://google.com" "curl/7.68.0"
+Sep 02 20:01:17 web02 sshd[85077]: Failed password for svc_scanner from 104.131.208.250 port 56542 ssh2
+DEVICE:camera-03 alert=threshold_exceeded metric=network value=547
+<134>Oct 02 20:01:17 fw02 %ASA-6-113005: User 'svc_account' from 188.81.10.114 succeeded
+DEVICE:sensor-002 heartbeat sent=OK seq=88981
+Sep 02 20:01:17 web02 systemd[1]: Started sshd.service.
+<188>Oct 02 20:01:17 fw02 %ASA-6-113005: User 'devops' from 65.148.0.246 succeeded
+DEVICE:camera-03 temp=29C humidity=33% battery=47%
+<188>Oct 02 20:01:17 asa-edge %ASA-6-302013: Teardown TCP connection 706592 for host 116.150.192.42:5504 to host 116.150.134.228:41764, duration 1953s, bytes 116949, reason "Timeout"
+53.146.22.252 - - [02/Sep/2026:20:01:17 +0000] "DELETE /api/v1/auth/login HTTP/1.1" 400 25664 "https://google.com" "kube-probe/1.25"
+Sep 02 20:01:17 db01 sudo:   appuser : TTY=pts/1 ; PWD=/home/deploy ; USER=root ; COMMAND=/usr/bin/systemctl restart nginx
+Sep 02 20:01:17 db01 sshd[58104]: Accepted publickey for appuser from 30.156.108.22 port 53263 ssh2
+143.221.213.172 - - [02/Sep/2026:20:01:17 +0000] "GET /api/v1/data/export HTTP/1.1" 301 11675 "https://internal.corp" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+DEVICE:camera-03 alert=threshold_exceeded metric=cpu value=795
+48.71.148.159 - - [02/Sep/2026:20:01:17 +0000] "POST /dashboard HTTP/1.1" 200 6692 "https://internal.corp" "kube-probe/1.25"
+<135>Oct 02 20:01:17 fw-dmz %ASA-6-302015: Built inbound TCP connection 881616 for host 119.139.73.85:25901 to host 130.40.157.176:57251
+DEVICE:gateway-01 alert=threshold_exceeded metric=cpu value=207
+<135>Oct 02 20:01:17 fw02 %ASA-6-113005: User 'admin' from 14.65.73.160 succeeded
+<134>Oct 02 20:01:17 fw02 %ASA-6-113004: User 'devops' from 166.37.123.230 failed
+44.133.174.159 - - [02/Sep/2026:20:01:17 +0000] "PATCH /api/v1/data/export HTTP/1.1" 404 49176 "https://google.com" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+147.189.56.178 - - [02/Sep/2026:20:01:17 +0000] "GET /api/v1/auth/login HTTP/1.1" 500 24040 "-" "python-requests/2.28.0"
+Sep 02 20:01:17 monitoring sudo:   admin : TTY=pts/2 ; PWD=/home/svc_scanner ; USER=root ; COMMAND=df -h /data
+167.194.2.115 - - [02/Sep/2026:20:01:17 +0000] "GET /favicon.ico HTTP/1.1" 401 617 "https://internal.corp" "curl/7.68.0"
+<135>Oct 02 20:01:17 fw-dmz %ASA-6-302013: Teardown TCP connection 930279 for host 136.148.56.141:528 to host 178.241.24.32:19812, duration 472s, bytes 18714, reason "Reset by peer"
+<188>Oct 02 20:01:17 fw01 %ASA-6-302015: Built inbound TCP connection 28516 for host 183.203.132.10:29834 to host 154.45.185.98:12364
+DEVICE:gateway-01 motion=detected zone=6 confidence=83% ts=1788379277
+DEVICE:camera-03 heartbeat sent=OK seq=3561
+<135>Oct 02 20:01:17 asa-edge %ASA-4-106023: Deny UDP (no connection) from 61.85.136.82/9366 to 182.62.83.75/38882 on interface inside
+Sep 02 20:01:17 monitoring CRON[18463]: (deploy) CMD (df -h /data)
+17.14.138.184 - - [02/Sep/2026:20:01:17 +0000] "PATCH /api/v1/data/export HTTP/1.1" 304 40141 "https://google.com" "python-requests/2.28.0"
+DEVICE:sensor-001 heartbeat sent=OK seq=99072
+Sep 02 20:01:17 web02 sshd[75178]: Accepted publickey for admin from 11.75.37.219 port 34071 ssh2
+<134>Oct 02 20:01:17 fw-dmz %ASA-4-106023: Deny UDP (no connection) from 138.54.163.178/17993 to 168.29.119.247/7361 on interface inside
+Sep 02 20:01:17 web01 CRON[24369]: (svc_scanner) CMD (tail -f /var/log/app.log)
+<135>Oct 02 20:01:17 fw02 %ASA-4-106023: Deny TCP (no connection) from 75.41.18.249/11536 to 171.208.241.147/50535 flags ACK on interface dmz
+Sep 02 20:01:17 api01 CRON[89886]: (admin) CMD (/opt/scripts/backup.sh)
+DEVICE:camera-03 heartbeat sent=OK seq=15445
+31.190.111.250 - - [02/Sep/2026:20:01:17 +0000] "POST /static/js/main.js HTTP/1.1" 502 21561 "https://internal.corp" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+DEVICE:camera-03 heartbeat sent=OK seq=71722
+DEVICE:sensor-002 motion=detected zone=4 confidence=83% ts=1788379296
+168.12.6.119 - - [02/Sep/2026:20:01:17 +0000] "PUT /favicon.ico HTTP/1.1" 200 18479 "-" "python-requests/2.28.0"
+180.164.149.17 - - [02/Sep/2026:20:01:17 +0000] "DELETE /ws/events HTTP/1.1" 502 31746 "https://dashboard.corp" "kube-probe/1.25"
+Sep 02 20:01:17 monitoring systemd[1]: Started nginx.service.
+Sep 02 20:01:17 bastion sshd[87754]: Failed password for deploy from 119.153.142.93 port 45520 ssh2
+Sep 02 20:01:17 monitoring sshd[22002]: Failed password for appuser from 192.132.97.241 port 63619 ssh2
+<135>Oct 02 20:01:17 fw02 %ASA-6-302013: Teardown TCP connection 620477 for host 82.145.141.17:9553 to host 141.107.85.78:55577, duration 2501s, bytes 144230, reason "RST"
+DEVICE:sensor-001 alert=threshold_exceeded metric=network value=6
+DEVICE:sensor-001 connection=established protocol=HTTP uptime=42997s
+DEVICE:sensor-001 connection=established protocol=CoAP uptime=70609s
+66.4.106.187 - - [02/Sep/2026:20:01:17 +0000] "PATCH /api/v1/health HTTP/1.1" 400 11791 "https://dashboard.corp" "python-requests/2.28.0"
+169.126.252.27 - - [02/Sep/2026:20:01:17 +0000] "GET /api/v1/auth/login HTTP/1.1" 200 46600 "https://dashboard.corp" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+DEVICE:gateway-01 alert=threshold_exceeded metric=cpu value=46
+DEVICE:sensor-002 temp=27C humidity=77% battery=70%
+<134>Oct 02 20:01:17 fw02 %ASA-4-106023: Deny UDP (no connection) from 44.164.245.229/23928 to 109.234.120.127/28308 on interface dmz
+Sep 02 20:01:17 db01 sshd[79061]: Accepted publickey for deploy from 174.176.200.32 port 56846 ssh2
+<188>Oct 02 20:01:17 fw01 %ASA-4-106023: Deny TCP (no connection) from 132.208.149.159/28101 to 173.155.99.145/32084 flags RST on interface outside
+DEVICE:gateway-01 alert=threshold_exceeded metric=disk value=761
+<135>Oct 02 20:01:17 fw02 %ASA-6-113005: User 'jsmith' from 175.56.56.177 succeeded
+<135>Oct 02 20:01:17 fw02 %ASA-4-106023: Deny TCP (no connection) from 121.201.204.195/13650 to 140.53.86.152/64033 flags ACK on interface management
+74.27.254.212 - - [02/Sep/2026:20:01:17 +0000] "POST /dashboard HTTP/1.1" 500 3507 "-" "python-requests/2.28.0"
+141.174.154.118 - - [02/Sep/2026:20:01:17 +0000] "DELETE /favicon.ico HTTP/1.1" 401 18797 "https://dashboard.corp" "python-requests/2.28.0"
+159.9.12.242 - - [02/Sep/2026:20:01:17 +0000] "PUT /api/v1/auth/login HTTP/1.1" 404 11782 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+<135>Oct 02 20:01:17 fw02 %ASA-6-113005: User 'jsmith' from 51.216.3.231 succeeded
+<188>Oct 02 20:01:17 fw-dmz %ASA-6-113005: User 'admin' from 122.15.5.132 succeeded

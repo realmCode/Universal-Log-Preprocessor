@@ -1,0 +1,36 @@
+module:
+  name: cisco_asa
+  source_type: network_device
+  formats: [syslog]
+  version: "1.0.0"
+  description: "Cisco ASA firewall log parser. Handles connection teardown, built, deny, login messages."
+
+recognize:
+  patterns:
+    - match: '%ASA-'
+      confidence: 0.95
+      format: syslog
+
+parse:
+  strip_syslog_header: true
+  patterns:
+    teardown: '%ASA-6-302013:.*?host\\s+(?P<src_ip>\\S+):(?P<src_port>\\d+).*?host\\s+(?P<dst_ip>\\S+):(?P<dst_port>\\d+).*?duration\\s+(?P<duration>\\d+)s.*?bytes\\s+(?P<bytes>\\d+)'
+    built: '%ASA-6-302015:.*?host\\s+(?P<src_ip>\\S+):(?P<src_port>\\d+).*?host\\s+(?P<dst_ip>\\S+):(?P<dst_port>\\d+)'
+    deny: '%ASA-4-106023:.*?from\\s+(?P<src_ip>\\S+)/(?P<src_port>\\d+).*?to\\s+(?P<dst_ip>\\S+)/(?P<dst_port>\\d+)'
+
+mapping:
+  src_ip: src_ip
+  src_port: src_port
+  dst_ip: dst_ip
+  dst_port: dst_port
+  bytes: bytes_sent
+  message_code:
+    source_field: message_code
+    transform:
+      "302013": connection_teardown
+      "302015": connection_built
+      "106023": firewall_deny
+      "106010": firewall_deny
+      "113005": login_success
+      "113004": login_failure
+      default: unknown
